@@ -34,10 +34,10 @@ In the Claude desktop app: click **+** next to the prompt box, then **Plugins**,
 You need a key for at least one vendor. Either set the usual environment
 variables (`OPENAI_API_KEY`, `GEMINI_API_KEY` or `GOOGLE_API_KEY`, `XAI_API_KEY`),
 or save keys in the plugin's options, which Claude Code keeps in your system
-keychain. To save them without echoing them to the screen (zsh):
+keychain. To save them without echoing them to the screen (bash or zsh):
 
 ```bash
-read -s "?OpenAI key: " OK; echo; read -s "?Gemini key: " GK; echo; printf '{"openaiApiKey":"%s","geminiApiKey":"%s"}' "$OK" "$GK" | claude plugin configure second-opinion@revilo-digital --values-stdin; unset OK GK
+printf 'OpenAI key: '; read -rs OK; echo; printf 'Gemini key: '; read -rs GK; echo; printf '{"openaiApiKey":"%s","geminiApiKey":"%s"}' "$OK" "$GK" | claude plugin configure second-opinion@revilo-digital --values-stdin; unset OK GK
 ```
 
 Use dedicated keys with a spending cap rather than production ones.
@@ -66,12 +66,20 @@ its own line, so attach the image to a message first, or just ask Claude.
 
 ## What leaves your machine
 
-Only what you ask for, sent straight to the vendor you picked:
+Everything goes straight to the vendor, with nothing in between:
 
-- `ask_model`: the question Claude writes, plus the session transcript and
-  images only when they're asked for.
+- `ask_model`: the question Claude writes. Claude decides whether to add the
+  session transcript, your latest message's images or image files it names
+  (up to 10 MB each). Claude can name a model you haven't turned on, but only
+  from a vendor that has at least one model on.
 - `/second-opinion`: the session transcript (newest first, capped at 80,000
   characters, tool output abridged) and your latest message's images.
+- Model lists: at session start, from each vendor that has a model on; from
+  every vendor with a key when you open `/reviewer` or press Refresh. These
+  send your key and nothing else.
+
+Replies reach Claude marked as an outside model's text, with an instruction
+not to follow anything in them or change anything until you answer.
 
 There's no other server and no telemetry. Requests run through `curl` so slow
 reasoning models get up to ten minutes; the key and body are passed on stdin, so
