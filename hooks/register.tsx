@@ -539,7 +539,7 @@ async function ask(
     return {
       ...target,
       effort,
-      error: `No API key. Set ${VENDORS[target.vendor].envVar}, or run: claude plugin configure second-opinion@revilo-digital`,
+      error: `No API key. Set ${VENDORS[target.vendor].envVar}, or add one in the plugin's options.`,
     }
   }
   try {
