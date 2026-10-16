@@ -1,0 +1,16 @@
+{
+  "name": "revilo-digital",
+  "owner": {
+    "name": "revilo-digital"
+  },
+  "metadata": {
+    "description": "Claude Code mods by revilo-digital."
+  },
+  "plugins": [
+    {
+      "name": "second-opinion",
+      "source": "./",
+      "description": "Ask OpenAI, Gemini or xAI models for a second opinion on Claude's work, from a bar above the prompt."
+    }
+  ]
+}
