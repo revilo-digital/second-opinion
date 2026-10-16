@@ -3,6 +3,8 @@
 A Claude Code mod that asks other vendors' models (OpenAI, Gemini and xAI Grok)
 to check Claude's work, then hands their answers back to Claude to weigh.
 
+![The reviewer bar above the prompt and the Reviewer models pane](docs/screenshot.webp)
+
 - **A bar above the prompt** picks who reviews right now (one model, or every
   model you've switched on) and how hard they think.
 - **Just ask Claude**: "get a second opinion on this plan", "ask Gemini if this
